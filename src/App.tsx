@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Layout, Menu, Card, Form, Input, Button } from 'antd';
 import { LaptopOutlined, MobileOutlined, CameraOutlined } from '@ant-design/icons';
 import { useStore } from './useStore';
+import LoginForm from './LoginForm';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const App = observer(() => {
     const store = useStore();
+    const [users, setUsers] = useState<any[]>([]);
+
+    useEffect(() => {
+        const initialUsers = [
+            { username: 'utilizator1', password: 'parola1' },
+            { username: 'utilizator2', password: 'parola2' },
+            // Alte date de utilizator...
+        ];
+        localStorage.setItem('users', JSON.stringify(initialUsers));
+        setUsers(initialUsers);
+    }, []);
 
     const handleAddToCart = () => {
         const productData = {
@@ -36,6 +48,17 @@ const App = observer(() => {
                 </div>
             </Card>
         ));
+    };
+
+    const handleLogin = (username: string, password: string) => {
+        const user = users.find((user) => user.username === username && user.password === password);
+        if (user) {
+            console.log('Login successful!');
+            alert('Autentificare reușită!');
+        } else {
+            console.error('Invalid username or password.');
+            alert('Nume de utilizator sau parolă incorectă.');
+        }
     };
 
     return (
@@ -77,6 +100,9 @@ const App = observer(() => {
                                 </Button>
                             </Form.Item>
                         </Form>
+                    </div>
+                    <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                        <LoginForm onLogin={handleLogin} />
                     </div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Gadget Store ©{new Date().getFullYear()}</Footer>
