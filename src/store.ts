@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { Produs, ProdusExtins } from './tipuri';
+import { Produs } from './tipuri';
 
 class ProductStore {
     products: { laptopuri: Produs[], telefoane: Produs[], camereFoto: Produs[] } = {
@@ -53,6 +53,5 @@ class ProductStore {
         }
     }
 }
-
 const store = new ProductStore();
 export default store;
