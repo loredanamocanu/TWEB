@@ -43,6 +43,7 @@ class ProductStore {
         this.products[categoryKey].push(product);
     }
 
+    // @ts-ignore
     getCategoryKey(): keyof typeof this.products {
         switch (this.selectedCategory) {
             case '1': return 'laptopuri';
