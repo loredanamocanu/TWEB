@@ -1,19 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+// Înlocuiește importurile existente din ReactDOM cu acestea:
+import ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
+import store from './store';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {loadFromLocalStorage, saveToLocalStorage} from "./utils";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const dataInLocalStorage = loadFromLocalStorage('products');
+if (!dataInLocalStorage) {
+    saveToLocalStorage('products', store.products);
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+const rootElement = document.getElementById('root');
+
+// Arată un loading înainte de a afișa App
+ReactDOM.render(<div>Loading...</div>, rootElement);
+
+// Așteaptă 2 secunde înainte de a afișa App cu datele din localStorage
+setTimeout(() => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        rootElement
+    );
+}, 2000);
