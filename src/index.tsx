@@ -1,20 +1,14 @@
-// index.tsx
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+
 import App from './App';
-
-const initialUsers = [
-    { username: 'utilizator1', password: 'parola1' },
-    { username: 'utilizator2', password: 'parola2' },
-    // Alte date de utilizator...
-];
-
-localStorage.setItem('users', JSON.stringify(initialUsers));
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
 );
